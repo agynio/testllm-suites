@@ -1,10 +1,10 @@
 resource "testllm_test_suite" "codex" {
-  org_id = testllm_organization.org.id
+  org_id = data.testllm_organization.org.id
   name   = "codex"
 }
 
 resource "testllm_test" "codex_simple_hello" {
-  org_id   = testllm_organization.org.id
+  org_id   = data.testllm_organization.org.id
   suite_id = testllm_test_suite.codex.id
   name     = "simple-hello"
 
@@ -35,7 +35,7 @@ resource "testllm_test" "codex_simple_hello" {
 }
 
 resource "testllm_test" "codex_simple_tool_call" {
-  org_id   = testllm_organization.org.id
+  org_id   = data.testllm_organization.org.id
   suite_id = testllm_test_suite.codex.id
   name     = "simple-tool-call"
 

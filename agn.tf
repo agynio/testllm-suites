@@ -1,10 +1,10 @@
 resource "testllm_test_suite" "agn" {
-  org_id = testllm_organization.org.id
+  org_id = data.testllm_organization.org.id
   name   = "agn"
 }
 
 resource "testllm_test" "agn_simple_hello" {
-  org_id   = testllm_organization.org.id
+  org_id   = data.testllm_organization.org.id
   suite_id = testllm_test_suite.agn.id
   name     = "simple-hello"
 
@@ -23,7 +23,7 @@ resource "testllm_test" "agn_simple_hello" {
 }
 
 resource "testllm_test" "agn_simple_state" {
-  org_id   = testllm_organization.org.id
+  org_id   = data.testllm_organization.org.id
   suite_id = testllm_test_suite.agn.id
   name     = "simple-state"
 
@@ -52,7 +52,7 @@ resource "testllm_test" "agn_simple_state" {
 }
 
 resource "testllm_test" "agn_system_prompt" {
-  org_id   = testllm_organization.org.id
+  org_id   = data.testllm_organization.org.id
   suite_id = testllm_test_suite.agn.id
   name     = "system-prompt"
 

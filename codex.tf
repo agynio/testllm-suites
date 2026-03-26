@@ -16,12 +16,6 @@ resource "testllm_test" "codex_simple_hello" {
       any_content = true
     },
     {
-      type        = "message"
-      role        = "user"
-      content     = ""
-      any_content = true
-    },
-    {
       type    = "message"
       role    = "user"
       content = "hello"

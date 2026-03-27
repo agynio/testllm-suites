@@ -41,6 +41,18 @@ resource "testllm_test" "codex_simple_tool_call" {
 
   items = [
     {
+      type        = "message"
+      role        = "developer"
+      content     = ""
+      any_content = true
+    },
+    {
+      type        = "message"
+      role        = "user"
+      content     = ""
+      any_content = true
+    },
+    {
       type    = "message"
       role    = "user"
       content = "What is the weather in Paris?"

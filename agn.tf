@@ -75,10 +75,10 @@ resource "testllm_test" "agn_system_prompt" {
   ]
 }
 
-resource "testllm_test" "agn_summarize_agent" {
+resource "testllm_test" "agn_summarize_agent_turn1" {
   org_id   = data.testllm_organization.org.id
   suite_id = testllm_test_suite.agn.id
-  name     = "summarize-agent"
+  name     = "summarize-agent-turn1"
 
   items = [
     {
@@ -91,6 +91,15 @@ resource "testllm_test" "agn_summarize_agent" {
       role    = "assistant"
       content = "Computing began with Charles Babbage who designed the Analytical Engine in the 1830s. Ada Lovelace wrote the first algorithm. Alan Turing formalized computation in 1936. ENIAC was built in 1945. The transistor was invented in 1947 at Bell Labs. Integrated circuits followed in the late 1950s."
     },
+  ]
+}
+
+resource "testllm_test" "agn_summarize_agent_turn2" {
+  org_id   = data.testllm_organization.org.id
+  suite_id = testllm_test_suite.agn.id
+  name     = "summarize-agent-turn2"
+
+  items = [
     {
       type        = "message"
       role        = "system"

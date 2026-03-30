@@ -138,3 +138,94 @@ resource "testllm_test" "agn_summarize_history" {
     },
   ]
 }
+
+resource "testllm_test" "agn_summarize_tool_pair_turn1" {
+  org_id   = data.testllm_organization.org.id
+  suite_id = testllm_test_suite.agn.id
+  name     = "summarize-tool-pair-turn1"
+
+  items = [
+    {
+      type    = "message"
+      role    = "user"
+      content = "What is the weather in Paris right now please?"
+    },
+    {
+      type      = "function_call"
+      func_name = "get_weather"
+      call_id   = "fc_001"
+      arguments = "{\"location\": \"Paris\"}"
+    },
+    {
+      type    = "function_call_output"
+      call_id = "fc_001"
+      output  = "{\"temperature\": \"18\u00b0C\", \"condition\": \"partly cloudy\"}"
+    },
+    {
+      type    = "message"
+      role    = "assistant"
+      content = "The weather in Paris is currently 18\u00b0C and partly cloudy."
+    },
+  ]
+}
+
+resource "testllm_test" "agn_summarize_tool_pair_turn2" {
+  org_id   = data.testllm_organization.org.id
+  suite_id = testllm_test_suite.agn.id
+  name     = "summarize-tool-pair-turn2"
+
+  items = [
+    {
+      type        = "message"
+      role        = "system"
+      content     = ""
+      any_content = true
+    },
+    {
+      type      = "function_call"
+      func_name = "get_weather"
+      call_id   = "fc_001"
+      arguments = "{\"location\": \"Paris\"}"
+    },
+    {
+      type    = "function_call_output"
+      call_id = "fc_001"
+      output  = "{\"temperature\": \"18\u00b0C\", \"condition\": \"partly cloudy\"}"
+    },
+    {
+      type    = "message"
+      role    = "assistant"
+      content = "The weather in Paris is currently 18\u00b0C and partly cloudy."
+    },
+    {
+      type    = "message"
+      role    = "user"
+      content = "thanks"
+    },
+    {
+      type    = "message"
+      role    = "assistant"
+      content = "You're welcome!"
+    },
+  ]
+}
+
+resource "testllm_test" "agn_summarize_tool_pair_history" {
+  org_id   = data.testllm_organization.org.id
+  suite_id = testllm_test_suite.agn.id
+  name     = "summarize-tool-pair-history"
+
+  items = [
+    {
+      type        = "message"
+      role        = "user"
+      content     = ""
+      any_content = true
+    },
+    {
+      type    = "message"
+      role    = "assistant"
+      content = "User asked about Paris weather. Tool get_weather returned 18\u00b0C partly cloudy."
+    },
+  ]
+}

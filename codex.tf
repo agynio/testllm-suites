@@ -108,7 +108,7 @@ resource "testllm_test" "codex_mcp_tools_test" {
     {
       type    = "function_call_output"
       call_id = "fc_mem_001"
-      output  = "[\n  {\n    \"name\": \"test_project\",\n    \"entityType\": \"project\",\n    \"observations\": [\n      \"A test project\"\n    ]\n  }\n]"
+      output  = "{\"entities\":[{\"name\":\"test_project\",\"entityType\":\"project\",\"observations\":[\"A test project\"]}]}"
     },
     {
       type      = "function_call"
@@ -119,7 +119,7 @@ resource "testllm_test" "codex_mcp_tools_test" {
     {
       type    = "function_call_output"
       call_id = "fc_fs_001"
-      output  = "[FILE] hello.txt"
+      output  = "{\"content\":\"[FILE] hello.txt\"}"
     },
     {
       type    = "message"

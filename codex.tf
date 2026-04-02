@@ -75,3 +75,56 @@ resource "testllm_test" "codex_simple_tool_call" {
     },
   ]
 }
+
+resource "testllm_test" "codex_mcp_tools_test" {
+  org_id   = data.testllm_organization.org.id
+  suite_id = testllm_test_suite.codex.id
+  name     = "mcp-tools-test"
+
+  items = [
+    {
+      type        = "message"
+      role        = "developer"
+      content     = ""
+      any_content = true
+    },
+    {
+      type        = "message"
+      role        = "user"
+      content     = ""
+      any_content = true
+    },
+    {
+      type    = "message"
+      role    = "user"
+      content = "Create an entity called test_project of type project with observation 'A test project', then list files in /test-data"
+    },
+    {
+      type      = "function_call"
+      func_name = "mcp__memory__create_entities"
+      call_id   = "fc_mem_001"
+      arguments = "{\"entities\":[{\"name\":\"test_project\",\"entityType\":\"project\",\"observations\":[\"A test project\"]}]}"
+    },
+    {
+      type    = "function_call_output"
+      call_id = "fc_mem_001"
+      output  = "[\n  {\n    \"name\": \"test_project\",\n    \"entityType\": \"project\",\n    \"observations\": [\n      \"A test project\"\n    ]\n  }\n]"
+    },
+    {
+      type      = "function_call"
+      func_name = "mcp__filesystem__list_directory"
+      call_id   = "fc_fs_001"
+      arguments = "{\"path\":\"/test-data\"}"
+    },
+    {
+      type    = "function_call_output"
+      call_id = "fc_fs_001"
+      output  = "[FILE] hello.txt"
+    },
+    {
+      type    = "message"
+      role    = "assistant"
+      content = "I've created the entity 'test_project' (type: project) with the observation 'A test project'. The /test-data directory contains one file: hello.txt."
+    },
+  ]
+}

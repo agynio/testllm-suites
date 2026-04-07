@@ -229,3 +229,44 @@ resource "testllm_test" "agn_summarize_tool_pair_history" {
     },
   ]
 }
+
+resource "testllm_test" "agn_mcp_tools_test" {
+  org_id   = data.testllm_organization.org.id
+  suite_id = testllm_test_suite.agn.id
+  name     = "mcp-tools-test"
+
+  items = [
+    {
+      type    = "message"
+      role    = "user"
+      content = "Create an entity called test_project of type project with observation 'A test project', then list files in /test-data"
+    },
+    {
+      type      = "function_call"
+      func_name = "create_entities"
+      call_id   = "fc_mem_001"
+      arguments = "{\"entities\":[{\"name\":\"test_project\",\"entityType\":\"project\",\"observations\":[\"A test project\"]}]}"
+    },
+    {
+      type    = "function_call_output"
+      call_id = "fc_mem_001"
+      output  = "{\"entities\":[{\"name\":\"test_project\",\"entityType\":\"project\",\"observations\":[\"A test project\"]}]}"
+    },
+    {
+      type      = "function_call"
+      func_name = "list_directory"
+      call_id   = "fc_fs_001"
+      arguments = "{\"path\":\"/test-data\"}"
+    },
+    {
+      type    = "function_call_output"
+      call_id = "fc_fs_001"
+      output  = "{\"content\":\"[FILE] hello.txt\"}"
+    },
+    {
+      type    = "message"
+      role    = "assistant"
+      content = "I've created the entity 'test_project' (type: project) with the observation 'A test project'. The /test-data directory contains one file: hello.txt."
+    },
+  ]
+}

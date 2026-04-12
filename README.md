@@ -25,7 +25,7 @@ During E2E runs, platform agents are configured to hit TestLLM instead of a real
 └── .gitignore
 ```
 
-- **`main.tf`** — Declares the `testllm` provider (source: `agynio/testllm`, currently v0.4.3) and looks up the organization by slug.
+- **`main.tf`** — Declares the `testllm` provider (source: `agynio/testllm`, currently v0.4.4) and looks up the organization by slug.
 - **`variables.tf`** — Defines `api_token` (sensitive) and `org_slug`, both supplied by Terraform Cloud workspace variables.
 - **One `.tf` file per test suite** — Each file creates a `testllm_test_suite` resource and all `testllm_test` resources that belong to it.
 

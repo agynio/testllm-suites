@@ -11,9 +11,15 @@ resource "testllm_test" "claude_simple_hello" {
 
   items = [
     {
-      type    = "anthropic_message"
-      role    = "user"
-      content = "hello"
+      type        = "anthropic_system"
+      text        = ""
+      any_content = true
+    },
+    {
+      type        = "anthropic_message"
+      role        = "user"
+      content     = ""
+      any_content = true
     },
     {
       type    = "anthropic_message"
@@ -30,9 +36,15 @@ resource "testllm_test" "claude_simple_state" {
 
   items = [
     {
-      type    = "anthropic_message"
-      role    = "user"
-      content = "hello"
+      type        = "anthropic_system"
+      text        = ""
+      any_content = true
+    },
+    {
+      type        = "anthropic_message"
+      role        = "user"
+      content     = ""
+      any_content = true
     },
     {
       type    = "anthropic_message"
@@ -40,9 +52,10 @@ resource "testllm_test" "claude_simple_state" {
       content = "Hi! How are you?"
     },
     {
-      type    = "anthropic_message"
-      role    = "user"
-      content = "fine"
+      type        = "anthropic_message"
+      role        = "user"
+      content     = ""
+      any_content = true
     },
     {
       type    = "anthropic_message"
@@ -59,9 +72,15 @@ resource "testllm_test" "claude_mcp_tools_test" {
 
   items = [
     {
-      type    = "anthropic_message"
-      role    = "user"
-      content = "Create an entity called test_project of type project with observation 'A test project', then list files in /test-data"
+      type        = "anthropic_system"
+      text        = ""
+      any_content = true
+    },
+    {
+      type        = "anthropic_message"
+      role        = "user"
+      content     = ""
+      any_content = true
     },
     {
       type = "anthropic_message"
@@ -84,8 +103,9 @@ resource "testllm_test" "claude_mcp_tools_test" {
       ])
     },
     {
-      type = "anthropic_message"
-      role = "user"
+      type        = "anthropic_message"
+      role        = "user"
+      any_content = true
       content_blocks = jsonencode([
         {
           type        = "tool_result"
@@ -117,8 +137,9 @@ resource "testllm_test" "claude_mcp_tools_test" {
       ])
     },
     {
-      type = "anthropic_message"
-      role = "user"
+      type        = "anthropic_message"
+      role        = "user"
+      any_content = true
       content_blocks = jsonencode([
         {
           type        = "tool_result"
@@ -134,4 +155,3 @@ resource "testllm_test" "claude_mcp_tools_test" {
     },
   ]
 }
-

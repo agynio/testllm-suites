@@ -270,3 +270,33 @@ resource "testllm_test" "agn_mcp_tools_test" {
     },
   ]
 }
+
+resource "testllm_test" "agn_shell_threads_send" {
+  org_id   = data.testllm_organization.org.id
+  suite_id = testllm_test_suite.agn.id
+  name     = "shell-threads-send"
+
+  items = [
+    {
+      type    = "message"
+      role    = "user"
+      content = "Send me an intermediate update then reply"
+    },
+    {
+      type      = "function_call"
+      func_name = "shell"
+      call_id   = "fc_shell_001"
+      arguments = "{\"command\": \"agyn threads send --message \\\"Thinking\\\" > /dev/null && echo ok\"}"
+    },
+    {
+      type    = "function_call_output"
+      call_id = "fc_shell_001"
+      output  = "{\"exit_code\":0,\"stdout\":\"ok\\n\",\"stderr\":\"\"}"
+    },
+    {
+      type    = "message"
+      role    = "assistant"
+      content = "Done thinking. Here is my reply."
+    },
+  ]
+}

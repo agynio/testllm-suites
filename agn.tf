@@ -300,3 +300,44 @@ resource "testllm_test" "agn_shell_threads_send" {
     },
   ]
 }
+
+resource "testllm_test" "agn_reminders_agent_loop" {
+  org_id   = data.testllm_organization.org.id
+  suite_id = testllm_test_suite.agn.id
+  name     = "reminders-agent-loop"
+
+  items = [
+    {
+      type    = "message"
+      role    = "user"
+      content = "Schedule a short reminder and acknowledge it when it arrives."
+    },
+    {
+      type      = "function_call"
+      func_name = "shell"
+      call_id   = "fc_shell_reminder_001"
+      arguments = "{\"command\": \"wget -q --header=\\\"Content-Type: application/json\\\" --header=\\\"x-organization-id: $AGYN_ORGANIZATION_ID\\\" --header=\\\"Authorization: Bearer $AGYN_API_TOKEN\\\" --post-data \\\"{\\\\\\\"thread_id\\\\\\\":\\\\\\\"$THREAD_ID\\\\\\\",\\\\\\\"delay_seconds\\\\\\\":3,\\\\\\\"note\\\\\\\":\\\\\\\"$REMINDER_NOTE\\\\\\\"}\\\" \\\"$AGYN_BASE_URL/apps/reminders/create-reminder\\\" > /dev/null && echo ok\"}"
+    },
+    {
+      type    = "function_call_output"
+      call_id = "fc_shell_reminder_001"
+      output  = "{\"exit_code\":0,\"stdout\":\"ok\\n\",\"stderr\":\"\"}"
+    },
+    {
+      type    = "message"
+      role    = "assistant"
+      content = "Scheduled. I will reply when the reminder arrives."
+    },
+    {
+      type        = "message"
+      role        = "user"
+      content     = ""
+      any_content = true
+    },
+    {
+      type    = "message"
+      role    = "assistant"
+      content = "Acknowledged: reminder received."
+    },
+  ]
+}

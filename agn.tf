@@ -316,7 +316,7 @@ resource "testllm_test" "agn_reminders_agent_loop" {
       type      = "function_call"
       func_name = "shell"
       call_id   = "fc_shell_reminder_001"
-      arguments = "{\"command\": \"wget -q --header=\\\"Content-Type: application/json\\\" --header=\\\"x-organization-id: $AGYN_ORGANIZATION_ID\\\" --post-data \\\"{\\\\\\\"thread_id\\\\\\\":\\\\\\\"$THREAD_ID\\\\\\\",\\\\\\\"delay_seconds\\\\\\\":3,\\\\\\\"note\\\\\\\":\\\\\\\"$REMINDER_NOTE\\\\\\\"}\\\" \\\"$AGYN_GATEWAY_URL/apps/reminders/create-reminder\\\" > /dev/null && echo ok\"}"
+      arguments = "{\"command\": \"wget -q --header=\\\"Content-Type: application/json\\\" --header=\\\"x-organization-id: $AGYN_ORGANIZATION_ID\\\" --header=\\\"Authorization: Bearer $AGYN_API_TOKEN\\\" --post-data \\\"{\\\\\\\"thread_id\\\\\\\":\\\\\\\"$THREAD_ID\\\\\\\",\\\\\\\"delay_seconds\\\\\\\":3,\\\\\\\"note\\\\\\\":\\\\\\\"$REMINDER_NOTE\\\\\\\"}\\\" \\\"$AGYN_BASE_URL/apps/reminders/create-reminder\\\" > /dev/null && echo ok\"}"
     },
     {
       type    = "function_call_output"

@@ -341,3 +341,54 @@ resource "testllm_test" "agn_reminders_agent_loop" {
     },
   ]
 }
+
+resource "testllm_test" "agn_shell_agyn_thread_create_wait" {
+  org_id   = data.testllm_organization.org.id
+  suite_id = testllm_test_suite.agn.id
+  name     = "shell-agyn-thread-create-wait"
+
+  items = [
+    {
+      type        = "message"
+      role        = "user"
+      content     = ""
+      any_content = true
+    },
+    {
+      type      = "function_call"
+      func_name = "shell"
+      call_id   = "fc_shell_agyn_wait_001"
+      arguments = "{\"command\": \"agyn threads create --organization-id \\\"$AGYN_ORGANIZATION_ID\\\" --add @e2e-agyn-wait-b-fixed --ref e2e-agyn-wait-fixed --send \\\"Please reply with e2e-agyn-wait-sentinel-fixed\\\" --wait 120 && echo ok\", \"timeout\": 150}"
+    },
+    {
+      type    = "function_call_output"
+      call_id = "fc_shell_agyn_wait_001"
+      output  = "{\"exit_code\":0,\"stdout\":\"from: agent\\nAgent B received the agyn wait check-in.\\nok\\n\",\"stderr\":\"\"}"
+    },
+    {
+      type    = "message"
+      role    = "assistant"
+      content = "Agent B replied successfully via agyn --wait."
+    },
+  ]
+}
+
+resource "testllm_test" "agn_agyn_wait_agent_b_reply" {
+  org_id   = data.testllm_organization.org.id
+  suite_id = testllm_test_suite.agn.id
+  name     = "agyn-wait-agent-b-reply"
+
+  items = [
+    {
+      type        = "message"
+      role        = "user"
+      content     = ""
+      any_content = true
+    },
+    {
+      type    = "message"
+      role    = "assistant"
+      content = "Agent B received the agyn wait check-in."
+    },
+  ]
+}

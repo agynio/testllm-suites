@@ -10,9 +10,10 @@ resource "testllm_test" "agn_simple_hello" {
 
   items = [
     {
-      type    = "message"
-      role    = "user"
-      content = "hi"
+      type             = "message"
+      role             = "user"
+      content          = ""
+      content_contains = "hi"
     },
     {
       type    = "message"
@@ -29,9 +30,10 @@ resource "testllm_test" "agn_simple_state" {
 
   items = [
     {
-      type    = "message"
-      role    = "user"
-      content = "hi"
+      type             = "message"
+      role             = "user"
+      content          = ""
+      content_contains = "hi"
     },
     {
       type    = "message"
@@ -39,9 +41,10 @@ resource "testllm_test" "agn_simple_state" {
       content = "Hi! How are you?"
     },
     {
-      type    = "message"
-      role    = "user"
-      content = "fine"
+      type             = "message"
+      role             = "user"
+      content          = ""
+      content_contains = "fine"
     },
     {
       type    = "message"
@@ -63,9 +66,10 @@ resource "testllm_test" "agn_system_prompt" {
       content = "You are personal assistant"
     },
     {
-      type    = "message"
-      role    = "user"
-      content = "hi"
+      type             = "message"
+      role             = "user"
+      content          = ""
+      content_contains = "hi"
     },
     {
       type    = "message"
@@ -82,9 +86,10 @@ resource "testllm_test" "agn_summarize_agent_turn1" {
 
   items = [
     {
-      type    = "message"
-      role    = "user"
-      content = "Tell me about the history of computing in detail"
+      type             = "message"
+      role             = "user"
+      content          = ""
+      content_contains = "Tell me about the history of computing in detail"
     },
     {
       type    = "message"
@@ -107,9 +112,10 @@ resource "testllm_test" "agn_summarize_agent_turn2" {
       any_content = true
     },
     {
-      type    = "message"
-      role    = "user"
-      content = "What came next?"
+      type             = "message"
+      role             = "user"
+      content          = ""
+      content_contains = "What came next?"
     },
     {
       type    = "message"
@@ -146,9 +152,10 @@ resource "testllm_test" "agn_summarize_tool_pair_turn1" {
 
   items = [
     {
-      type    = "message"
-      role    = "user"
-      content = "What is the weather in Paris right now please?"
+      type             = "message"
+      role             = "user"
+      content          = ""
+      content_contains = "What is the weather in Paris right now please?"
     },
     {
       type      = "function_call"
@@ -198,9 +205,10 @@ resource "testllm_test" "agn_summarize_tool_pair_turn2" {
       content = "The weather in Paris is currently 18\u00b0C and partly cloudy."
     },
     {
-      type    = "message"
-      role    = "user"
-      content = "thanks"
+      type             = "message"
+      role             = "user"
+      content          = ""
+      content_contains = "thanks"
     },
     {
       type    = "message"
@@ -237,9 +245,10 @@ resource "testllm_test" "agn_mcp_tools_test" {
 
   items = [
     {
-      type    = "message"
-      role    = "user"
-      content = "Create an entity called test_project of type project with observation 'A test project', then list files in /test-data"
+      type             = "message"
+      role             = "user"
+      content          = ""
+      content_contains = "Create an entity called test_project of type project with observation 'A test project', then list files in /test-data"
     },
     {
       type      = "function_call"
@@ -278,9 +287,10 @@ resource "testllm_test" "agn_shell_threads_send" {
 
   items = [
     {
-      type    = "message"
-      role    = "user"
-      content = "Send me an intermediate update then reply"
+      type             = "message"
+      role             = "user"
+      content          = ""
+      content_contains = "Send me an intermediate update then reply"
     },
     {
       type      = "function_call"
@@ -308,9 +318,10 @@ resource "testllm_test" "agn_reminders_agent_loop" {
 
   items = [
     {
-      type    = "message"
-      role    = "user"
-      content = "Schedule a short reminder and acknowledge it when it arrives."
+      type             = "message"
+      role             = "user"
+      content          = ""
+      content_contains = "Schedule a short reminder and acknowledge it when it arrives."
     },
     {
       type      = "function_call"

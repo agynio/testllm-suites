@@ -22,9 +22,10 @@ resource "testllm_test" "codex_simple_hello" {
       any_content = true
     },
     {
-      type    = "message"
-      role    = "user"
-      content = "hello"
+      type             = "message"
+      role             = "user"
+      content          = ""
+      content_contains = "hello"
     },
     {
       type    = "message"
@@ -53,9 +54,10 @@ resource "testllm_test" "codex_simple_tool_call" {
       any_content = true
     },
     {
-      type    = "message"
-      role    = "user"
-      content = "What is the weather in Paris?"
+      type             = "message"
+      role             = "user"
+      content          = ""
+      content_contains = "What is the weather in Paris?"
     },
     {
       type      = "function_call"
@@ -95,9 +97,10 @@ resource "testllm_test" "codex_mcp_tools_test" {
       any_content = true
     },
     {
-      type    = "message"
-      role    = "user"
-      content = "Create an entity called test_project of type project with observation 'A test project', then list files in /test-data"
+      type             = "message"
+      role             = "user"
+      content          = ""
+      content_contains = "Create an entity called test_project of type project with observation 'A test project', then list files in /test-data"
     },
     {
       type      = "function_call"

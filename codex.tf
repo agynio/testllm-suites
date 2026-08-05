@@ -131,3 +131,35 @@ resource "testllm_test" "codex_mcp_tools_test" {
     },
   ]
 }
+
+resource "testllm_test" "codex_summarize_file" {
+  org_id   = data.testllm_organization.org.id
+  suite_id = testllm_test_suite.codex.id
+  name     = "summarize-file"
+
+  items = [
+    {
+      type        = "message"
+      role        = "developer"
+      content     = ""
+      any_content = true
+    },
+    {
+      type        = "message"
+      role        = "user"
+      content     = ""
+      any_content = true
+    },
+    {
+      type             = "message"
+      role             = "user"
+      content          = ""
+      content_contains = "Please summarize the file."
+    },
+    {
+      type    = "message"
+      role    = "assistant"
+      content = "Here is a summary of the file."
+    },
+  ]
+}

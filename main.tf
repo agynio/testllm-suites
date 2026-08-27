@@ -2,7 +2,7 @@ terraform {
   required_providers {
     testllm = {
       source  = "agynio/testllm"
-      version = "0.5.0"
+      version = "0.6.0"
     }
   }
 }

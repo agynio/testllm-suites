@@ -102,27 +102,36 @@ resource "testllm_test" "codex_mcp_tools_test" {
       content          = ""
       content_contains = "Create an entity called test_project of type project with observation 'A test project', then list files in /test-data"
     },
+    # Codex groups an MCP server's tools into a namespace and calls one by its
+    # plain name with the namespace beside it. Joined into a single name, the
+    # call comes back "unsupported call" and the turn ends with no answer.
     {
       type      = "function_call"
-      func_name = "mcp__memory__create_entities"
+      func_name = "create_entities"
+      namespace = "mcp__memory"
       call_id   = "fc_mem_001"
       arguments = "{\"entities\":[{\"name\":\"test_project\",\"entityType\":\"project\",\"observations\":[\"A test project\"]}]}"
     },
+    # Codex wraps a tool result in the wall time the call took, which is a
+    # different number every run, so only the result itself can be named.
     {
-      type    = "function_call_output"
-      call_id = "fc_mem_001"
-      output  = "{\"entities\":[{\"name\":\"test_project\",\"entityType\":\"project\",\"observations\":[\"A test project\"]}]}"
+      type            = "function_call_output"
+      call_id         = "fc_mem_001"
+      output          = ""
+      output_contains = "{\"entities\":[{\"name\":\"test_project\",\"entityType\":\"project\",\"observations\":[\"A test project\"]}]}"
     },
     {
       type      = "function_call"
-      func_name = "mcp__filesystem__list_directory"
+      func_name = "list_directory"
+      namespace = "mcp__filesystem"
       call_id   = "fc_fs_001"
       arguments = "{\"path\":\"/test-data\"}"
     },
     {
-      type    = "function_call_output"
-      call_id = "fc_fs_001"
-      output  = "{\"content\":\"[FILE] hello.txt\"}"
+      type            = "function_call_output"
+      call_id         = "fc_fs_001"
+      output          = ""
+      output_contains = "{\"content\":\"[FILE] hello.txt\"}"
     },
     {
       type    = "message"
